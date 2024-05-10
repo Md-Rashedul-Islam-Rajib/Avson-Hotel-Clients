@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGithub } from "react-icons/fa";
+import { AuthContext } from "../context/AuthProvider";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
 
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
-    // const { logInUser, setUser, googleLogin, githubLogin, user,theme } =
-    //   useContext(AuthContext);
+    const { logInUser, setUser, googleSignin, githubSignin } = useContext(AuthContext);
   
-    // const location = useLocation();
-    // const navigate = useNavigate();
-    // console.log(location);
-    // const destination = location?.state || "/";
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const destination = location?.state || "/";
   
     const {
       register,
@@ -35,31 +37,31 @@ const Login = () => {
         });
     };
   
-    // const handleGoogle = () => {
-    //   googleLogin()
-    //     .then((result) => {
-    //       setUser(result.user);
-    //     //   toast.success("Log in Successfully as " + result.user.email);
+    const handleGoogle = () => {
+      googleSignin()
+        .then((result) => {
+          setUser(result.user);
+        //   toast.success("Log in Successfully as " + result.user.email);
   
-    //       navigate(destination);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // };
+          navigate(destination);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
-    // const handleGithub = () => {
-    //   githubLogin()
-    //     .then((result) => {
-    //       setUser(result.user);
-    //     //   toast.success("Log in successfully with Github");
+    const handleGithub = () => {
+      githubSignin()
+        .then((result) => {
+          setUser(result.user);
+        //   toast.success("Log in successfully with Github");
   
-    //       navigate(destination);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // };
+          navigate(destination);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
     return (
         <div
@@ -122,6 +124,22 @@ const Login = () => {
                   Log In
                 </button>
               </form>
+
+              <div className={`flex justify-between my-4 font-semibold`}>
+        <p>New here?</p>
+        <Link to="/register">
+          <p>Create an account</p>
+        </Link>
+      </div>
+
+      <div className="divider">Continue With</div>
+
+      <div className="mt-4 flex">
+        <FcGoogle onClick={handleGoogle} className="mx-auto h-10 w-10 cursor-pointer" />
+        <FaGithub onClick={handleGithub} className="mx-auto h-10 w-10 cursor-pointer" />
+      </div>
+
+
             </div>
           </div>
         </div>

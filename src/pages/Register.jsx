@@ -1,66 +1,51 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { IoImagesOutline } from "react-icons/io5";
+import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from "../context/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const {createUser, logOutUser} = useContext(AuthContext);
+  console.log(typeof createUser);
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm()
 
-  // const { logInUser, setUser, googleLogin, githubLogin, user,theme } =
-  //   useContext(AuthContext);
 
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // console.log(location);
-  // const destination = location?.state || "/";
+      
+      const onSubmit= (data) => {
+        const {email, password} = data;
+          if(password.length < 6){
+            return setError('password must be 6 characters')
+          }
+          if(!/[A-Z]/.test(password)){
+            return setError('password must have at least one uppercase characters')
+          }
+          if(!/[a-z]/.test(password)){
+            return setError('password must have at least one lowercase characters')
+          }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+          setError('');
+        createUser(email, password)
+        .then(result=>{
+            console.log(result.user);
+            toast.success('Account created successfully');
+            logOutUser()
+            navigate('/login')
+            
+        
 
-  const onSubmit = (data) => {
-    const { email, password } = data;
-    logInUser(email, password)
-      .then((result) => {
-        setUser(result.user);
-        //   toast.success("Log in Successfully as " + email);
-        navigate(destination);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        //   toast.error("Log in Failed. Reason :" + errorMessage);
-      });
-  };
-
-  // const handleGoogle = () => {
-  //   googleLogin()
-  //     .then((result) => {
-  //       setUser(result.user);
-  //     //   toast.success("Log in Successfully as " + result.user.email);
-
-  //       navigate(destination);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // const handleGithub = () => {
-  //   githubLogin()
-  //     .then((result) => {
-  //       setUser(result.user);
-  //     //   toast.success("Log in successfully with Github");
-
-  //       navigate(destination);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+        })
+        .catch(error=> {
+            console.log(error);
+        })
+      }
 
   return (
     <div
@@ -112,6 +97,12 @@ const Register = () => {
 
 <button className={`btn text-white bg-[#FEA116] w-full`}>Register</button>
 </form>
+
+<div className={`flex justify-between font-semibold my-4`}>
+    <p>Already have account?</p>
+    <Link to='/login'><p>Login Here</p></Link>
+</div>
+<Toaster />
             </div>
           </div>
         </div>
