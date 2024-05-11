@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash, FaGithub } from "react-icons/fa";
 import { AuthContext } from "../context/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import toast from "react-hot-toast";
 
 
 const Login = () => {
@@ -27,13 +28,13 @@ const Login = () => {
       logInUser(email, password)
         .then((result) => {
           setUser(result.user);
-        //   toast.success("Log in Successfully as " + email); 
+          toast.success("Log in Successfully as " + email); 
           navigate(destination);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-        //   toast.error("Log in Failed. Reason :" + errorMessage);
+          toast.error("Log in Failed. Reason :" + errorMessage);
         });
     };
   
@@ -82,6 +83,8 @@ const Login = () => {
             </div>
             <div className="card shrink-0 w-full max-w-sm shadow-2xl text-black p-8 bg-base-100">
               <h2 className="py-8">Welcome to Avson</h2>
+
+
               <form onSubmit={handleSubmit(onSubmit)}>
                 <p className="mb-2">Email</p>
                 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
