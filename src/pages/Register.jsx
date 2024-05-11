@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {createUser, logOutUser} = useContext(AuthContext);
-  console.log(typeof createUser);
+
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -57,7 +57,7 @@ const Register = () => {
         <div className="hero">
           <div className="hero-content flex-col lg:flex-row">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Login now!</h1>
+              <h1 className="text-5xl font-bold">Join Us!</h1>
               <p className="py-6">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut
                 assumenda excepturi exercitationem quasi. In deleniti eaque aut

@@ -1,13 +1,25 @@
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png'
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthProvider';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Navbar = () => {
+
+  const {user,logOutUser} = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    logOutUser()
+    toast.success('Logged out successfully')
+    
+  }
+
   const nav = <>
     <NavLink to='/'> <li>Home</li> </NavLink>
     <NavLink to='/rooms'> <li>Rooms</li> </NavLink>
     <NavLink to='/bookings'> <li>My Bookings</li> </NavLink>
-    <NavLink to='/login'> <li>Login</li> </NavLink>
-    <NavLink to='register'> <li>Register</li> </NavLink>
+    {!user && <NavLink to='/login'> <li>Login</li> </NavLink>}
+    {!user && <NavLink to='register'> <li>Register</li> </NavLink>}
   
   </>
     return (
@@ -31,9 +43,26 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn bg-[#FEA116] text-white">Button</a>
+
+        <div className="dropdown dropdown-end">
+        <div tabIndex={0} role="button" className="btn">
+        <div className="avatar">
+  <div className="w-8 rounded">
+    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Tailwind-CSS-Avatar-component" />
+  </div>
+</div>
         </div>
+        <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+          <li><a>Profile</a></li> 
+          <li onClick={handleSignOut}><a>Log Out</a></li>
+        </ul>
       </div>
+    </div>
+
+          <a className="btn bg-[#FEA116] text-white">Button</a>
+          <Toaster />
+        </div>
+      
     );
 };
 
