@@ -88,6 +88,11 @@ setSelectedDate(date)
                               onChange={handleDateChange}
                               dateFormat="dd/MM/yyyy"
                                />
+                               
+                          </div>
+                          
+                          <div className="flex justify-center">
+                          <button className="bg-[#fea116] btn text-white">Book Now</button>
                           </div>
 
                           
