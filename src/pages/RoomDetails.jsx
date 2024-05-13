@@ -103,8 +103,11 @@ const RoomDetails = () => {
           </div>
         </div>
 
-        <div>
+        <div className="relative">
           <img src={image} alt="" />
+          {offer && <div className="bg-gradient-to-r from-[#ad8e3d] via-[#dec75e] via-[#f3ec8d] h-16  to-[#c6a136] w-[850px] clip-path absolute top-5 right-0">
+            <p className="text-right font-bold">{offer}</p>
+            </div>}
         </div>
       </div>
 
@@ -114,6 +117,8 @@ const RoomDetails = () => {
             {price}$ / <sub className="text-lg font-normal">Night</sub>
           </p>
         </div>
+
+            
 
         <div className="flex justify-center my-4">
           <DatePicker

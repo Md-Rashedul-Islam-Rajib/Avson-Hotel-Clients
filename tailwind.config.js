@@ -6,7 +6,11 @@ export default {
     "node_modules/flowbite-react/lib/esm/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+      clipPath: {
+        'polygon-custom': 'polygon(100% 5%, 15% 5%, 0% 25%, 10% 45%, 100% 45%, 100% 25%)',
+      },
+    },
   },
   plugins: [
     require('daisyui'),

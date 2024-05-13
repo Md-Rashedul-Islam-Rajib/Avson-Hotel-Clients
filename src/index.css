@@ -6,6 +6,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .clip-path{
+        clip-path: polygon(100% 0%, 40% 0%, 44% 21%, 41% 45%, 100% 45%, 100% 22%);
+    }
+}
 *{
     font-family: "Montserrat", sans-serif;
 }
