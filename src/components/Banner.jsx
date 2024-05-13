@@ -25,9 +25,9 @@ const Banner = () => {
   <div className="hero-overlay bg-opacity-60"></div>
   <div className="hero-content text-center text-neutral-content">
     <div className="max-w-md">
-      <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-      <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-      <button className="btn btn-primary">Get Started</button>
+      <h1 className="mb-5 text-5xl font-bold">Indulge in Comfort</h1>
+      <p className="mb-5">Unwind in your cozy haven. Avson Hotel's room service delivers delicious meals and refreshing beverages straight to your door, 24/7. Explore our extensive menu and savor exquisite flavors without leaving your room</p>
+      <button className="btn bg-[#fea116] border-0 text-white">Get Started</button>
     </div>
   </div>
 </div>
@@ -39,9 +39,9 @@ const Banner = () => {
   <div className="hero-overlay bg-opacity-60"></div>
   <div className="hero-content text-center text-neutral-content">
     <div className="max-w-md">
-      <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-      <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-      <button className="btn btn-primary">Get Started</button>
+      <h1 className="mb-5 text-5xl font-bold">Cravings Conquered</h1>
+      <p className="mb-5">No need to venture out. Avson Hotel's room service caters to your every whim. From breakfast in bed to a late-night snack, our attentive staff ensures a delightful dining experience in the comfort of your room</p>
+      <button className="btn bg-[#fea116] border-0 text-white">Get Started</button>
     </div>
   </div>
 </div> 
@@ -55,9 +55,9 @@ const Banner = () => {
   <div className="hero-overlay bg-opacity-60"></div>
   <div className="hero-content text-center text-neutral-content">
     <div className="max-w-md">
-      <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-      <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-      <button className="btn btn-primary">Get Started</button>
+      <h1 className="mb-5 text-5xl font-bold">Experience unparalleled comfort. </h1>
+      <p> Avson Hotel offers a haven of relaxation with exceptional room service. Order gourmet meals, refreshing drinks, or anything you desire, all at your fingertips. Let us pamper you</p>
+      <button className="btn bg-[#fea116] border-0 text-white">Get Started</button>
     </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ import Booking from "../pages/Booking";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
+import RoomDetails from "../pages/RoomDetails";
 
 
 
@@ -17,11 +18,17 @@ export const router = createBrowserRouter([
             children: [
                 {
                     path : '/',
-                    element: <Home></Home>
+                    element: <Home></Home>,
+                    loader: ()=> fetch('http://localhost:5000/rooms')
                 },
                 {
                     path: '/rooms',
-                    element: <Room></Room>
+                    element: <Room></Room>,
+                    loader: ()=> fetch('http://localhost:5000/rooms')
+                },{
+                    path: '/room/:id',
+                    element: <RoomDetails></RoomDetails>,
+                    loader: ({params})=> fetch(`http://localhost:5000/room/${params.id}`)
                 },
                 {
                     path: '/bookings',

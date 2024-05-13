@@ -57,39 +57,37 @@ const Register = () => {
         <div className="hero">
           <div className="hero-content flex-col lg:flex-row">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Join Us!</h1>
+              <h1 className="text-5xl font-bold">Welcome to Avson Hotel!</h1>
               <p className="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi. In deleniti eaque aut
-                repudiandae et a id nisi.
+              We're thrilled to welcome you to Avson Hotel. Whether you're here for business or pleasure, we're committed to making your stay comfortable and enjoyable
               </p>
             </div>
             <div className="card shrink-0 w-full max-w-sm shadow-2xl text-black p-8 bg-base-100">
-              <h2 className="py-8">Welcome to Avson</h2>
+              <h2 className="py-8 text-center font-bold text-2xl">Register your account</h2>
               <form onSubmit={handleSubmit(onSubmit)}>
 
                 <p>Name</p>
 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
-  <input type="text" className="grow" placeholder="Name" {...register("Name")} />
+  <input type="text" className="grow border-0" placeholder="Name" {...register("Name")} />
 </label>
 
             
 
 <p>Email</p>
 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
-  <input type="text" className="grow" placeholder="Email" {...register('email', { required: true })}/>
+  <input type="text" className="grow border-0" placeholder="Email" {...register('email', { required: true })}/>
 </label>
   {errors.email && <p className="text-red-600 text-sm">Email is required</p>}
 
 <p>Photo URL</p>
 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
-  <input type="text" className="grow" placeholder="Photo URL" {...register('PhotoURL')} />
+  <input type="text" className="grow border-0" placeholder="Photo URL" {...register('PhotoURL')} />
   
 </label>
 
 <p>Password</p>
 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
-  <input type={showPassword ? 'text' : 'password'} className="grow" placeholder="Password" {...register('password', { required: true })}/>
+  <input type={showPassword ? 'text' : 'password'} className="grow border-0" placeholder="Password" {...register('password', { required: true })}/>
   <span onClick={()=> {setShowPassword(!showPassword)}}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
 </label>
   {errors.password && <p className="text-red-600 text-sm">Password is required</p>}
@@ -99,8 +97,8 @@ const Register = () => {
 </form>
 
 <div className={`flex justify-between font-semibold my-4`}>
-    <p>Already have account?</p>
-    <Link to='/login'><p>Login Here</p></Link>
+    <p>Returning Guest? </p>
+    <Link to='/login'><p>Please sign in below</p></Link>
 </div>
 <Toaster />
             </div>

@@ -28,8 +28,8 @@ const Newsletter = () => {
             
             <div className='flex-1 my-auto'> 
                 <div className="px-3 md:px-0 md:w-3/4 mx-auto text-center md:text-left">
-                <h2>Subscribe to our newsletter</h2>
-                <p>We'll send you the best of our blog just once a month. We promise</p>
+                <h2 className='text-3xl  font-semibold'>Subscribe to our newsletter</h2>
+                <p className='font-medium my-4'>We'll send you the best of our blog just once a month. We promise</p>
 
 
                 <div>
@@ -38,7 +38,7 @@ const Newsletter = () => {
                 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
                   <input
                     type="text"
-                    className="grow"
+                    className="grow border-0"
                     placeholder="Email"
                     {...register("email")}
                   />
@@ -49,7 +49,7 @@ const Newsletter = () => {
                 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
                   <input
                     type='text'
-                    className="grow"
+                    className="grow border-0"
                     placeholder="Name"
                     {...register("name")}
                   />

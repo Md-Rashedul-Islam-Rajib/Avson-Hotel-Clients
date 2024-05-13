@@ -1,0 +1,75 @@
+[
+  {
+    "title": "Luxury Suite with Ocean View",
+    "description": "Indulge in luxury with breathtaking ocean views in our spacious suite. Perfect for couples or solo travelers seeking a lavish retreat.",
+    "price": 350,
+    "room_size": "500 sq ft",
+    "availability": "Available",
+    "image": "https://i.ibb.co/s3pnp0s/1.jpg",
+    "offer": "25% off for bookings made before June 1st",
+    "bedroom_count": 1,
+    "bathroom_count": 1,
+    "amenity" : ["Free Parking", "Elevator","Coffee Maker", "Fast WiFi","Cable TV","Air Conditioning", "SPA Services", "Kitchen", "Hair Dryer", "Gym","Pool","Washer"]
+    
+  },
+  {
+    "title": "Deluxe Double Room",
+    "description": "Experience ultimate comfort in our Deluxe Double Room. Ideal for couples or business travelers seeking a stylish and relaxing space.",
+    "price": 200,
+    "room_size": "350 sq ft",
+    "availability": "Available",
+    "image": "https://i.ibb.co/NSxmLRZ/2.jpg",
+    "offer": "Free breakfast included",
+    "bedroom_count": 1,
+    "bathroom_count": 1,
+    "free_parking": true,"amenity" : ["Free Parking", "Elevator","Coffee Maker", "Fast WiFi","Cable TV","Air Conditioning", "SPA Services", "Kitchen", "Hair Dryer", "Gym","Pool","Washer"]
+  },
+  {
+    "title": "Standard Single Room",
+    "description": "Our cozy Standard Single Room offers all the essentials for a comfortable stay. Perfect for solo travelers on a budget.",
+    "price": 150,
+    "room_size": "250 sq ft",
+    "availability": "Booked",
+    "image": "https://i.ibb.co/sqRwjDQ/3.jpg",
+    "offer": "",
+    "bedroom_count": 1,
+    "bathroom_count": 1,
+    "amenity" : ["Free Parking", "Elevator","Coffee Maker", "Fast WiFi","Cable TV","Air Conditioning", "Gym","Pool","Washer"]
+  },
+  {
+    "title": "Family Suite",
+    "description": "Spacious and family-friendly, our Family Suite provides ample space for a comfortable stay. Enjoy quality time together with all the necessary amenities.",
+    "price": 400,
+    "room_size": "600 sq ft",
+    "availability": "Available",
+    "image": "https://i.ibb.co/7zQtjv4/4.jpg",
+    "offer": "10% off for stays of 5 nights or more",
+    "bedroom_count": 2,
+    "bathroom_count": 2,
+    "amenity" : ["Free Parking", "Elevator","Coffee Maker", "Fast WiFi","Cable TV","Air Conditioning", "SPA Services", "Kitchen", "Hair Dryer", "Gym","Pool","Washer"]
+  },
+  {
+    "title": "Executive Suite",
+    "description": "Experience luxury and sophistication in our Executive Suite. Perfect for business travelers or those seeking an elevated stay experience.",
+    "price": 500,
+    "room_size": "700 sq ft",
+    "availability": "Available",
+    "image": "https://i.ibb.co/SrrHbxC/5.jpg",
+    "offer": "",
+    "bedroom_count": 1,
+    "bathroom_count": 1,
+    "amenity" : ["Free Parking", "Elevator","Coffee Maker", "Fast WiFi","Cable TV","Air Conditioning", "SPA Services", "Kitchen", "Hair Dryer", "Gym","Pool","Washer"]
+  },
+  {
+    "title": "Standard Double Room",
+    "description": "Enjoy a comfortable stay in our Standard Double Room. Perfect for couples or friends traveling together.",
+    "price": 180,
+    "room_size": "300 sq ft",
+    "availability": "Available",
+    "image": "https://i.ibb.co/P5HfPw5/6.jpg",
+    "offer": "Free upgrade to Deluxe Double Room upon availability",
+    "bedroom_count": 1,
+    "bathroom_count": 1,
+    "amenity" : ["Free Parking", "Elevator","Coffee Maker", "Fast WiFi","Cable TV","Air Conditioning", "Hair Dryer", "Gym","Pool","Washer"]
+  }
+]

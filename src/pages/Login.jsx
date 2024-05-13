@@ -74,15 +74,13 @@ const Login = () => {
         <div className="hero">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Login now!</h1>
+              <h1 className="text-5xl font-bold">Avson Hotel: Welcome Back!</h1>
               <p className="py-6">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi. In deleniti eaque aut
-                repudiandae et a id nisi.
+              This login provides access to manage your reservation, explore our room service menu, and enhance your Avson Hotel experience
               </p>
             </div>
             <div className="card shrink-0 w-full max-w-sm shadow-2xl text-black p-8 bg-base-100">
-              <h2 className="py-8">Welcome to Avson</h2>
+              <h2 className="py-8 text-center font-bold text-2xl">Login to your account</h2>
 
 
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +88,7 @@ const Login = () => {
                 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
                   <input
                     type="text"
-                    className="grow"
+                    className="grow border-0"
                     placeholder="Email"
                     {...register("email", { required: true })}
                   />
@@ -105,7 +103,7 @@ const Login = () => {
                 <label className="input input-bordered flex items-center gap-2 mb-2 md:mb-4">
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="grow"
+                    className="grow border-0"
                     placeholder="Password"
                     {...register("password", { required: true })}
                   />
@@ -129,9 +127,9 @@ const Login = () => {
               </form>
 
               <div className={`flex justify-between my-4 font-semibold`}>
-        <p>New here?</p>
+        <p>New to Avson Hotel?</p>
         <Link to="/register">
-          <p>Create an account</p>
+          <p>Create an account</p><span>to unlock exclusive benefits.</span>
         </Link>
       </div>
 

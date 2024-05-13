@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png'
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
@@ -18,7 +18,6 @@ const Navbar = () => {
     <NavLink to='/'> <li>Home</li> </NavLink>
     <NavLink to='/rooms'> <li>Rooms</li> </NavLink>
     <NavLink to='/bookings'> <li>My Bookings</li> </NavLink>
-    {!user && <NavLink to='/login'> <li>Login</li> </NavLink>}
     {!user && <NavLink to='register'> <li>Register</li> </NavLink>}
   
   </>
@@ -29,7 +28,7 @@ const Navbar = () => {
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <ul tabIndex={0} className="font-semibold menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               {nav}
             </ul>
           </div>
@@ -38,28 +37,16 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-4">
+          <ul className="menu menu-horizontal px-1 gap-4 font-semibold">
             {nav}
           </ul>
         </div>
         <div className="navbar-end">
 
-        <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn">
-        <div className="avatar">
-  <div className="w-8 rounded">
-    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Tailwind-CSS-Avatar-component" />
-  </div>
-</div>
-        </div>
-        <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-          <li><a>Profile</a></li> 
-          <li onClick={handleSignOut}><a>Log Out</a></li>
-        </ul>
-      </div>
+        
     </div>
 
-          <a className="btn bg-[#FEA116] text-white">Button</a>
+         {user ? <a onClick={handleSignOut} className="btn bg-[#FEA116] text-white">Log Out</a>: <Link to='/login'><a onClick={handleSignOut} className="btn bg-[#FEA116] text-white">Login</a> </Link> }
           <Toaster />
         </div>
       
