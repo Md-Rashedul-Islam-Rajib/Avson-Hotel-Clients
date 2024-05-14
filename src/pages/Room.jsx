@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { TiStarFullOutline } from 'react-icons/ti';
 import { Link, useLoaderData } from 'react-router-dom';
@@ -10,7 +10,7 @@ const Room = () => {
     const [maxPrice, setMaxPrice] = useState('');
     const [products, setProducts] = useState(rooms);
   
-console.log(minPrice,maxPrice);
+
     const handleMinPriceChange = (event) => {
         setMinPrice(event.target.value);
     };
@@ -20,7 +20,7 @@ console.log(minPrice,maxPrice);
     };
 
     const getProducts = () => {
-        fetch(`https://assignment-11-server-snowy.vercel.app/filter/${minPrice}/${maxPrice}`)
+        fetch(`https://newassignment-11.vercel.app/filter/${minPrice}/${maxPrice}`)
             .then(response => response.json())
             .then(data => {
                 setProducts(data);
@@ -70,7 +70,7 @@ console.log(minPrice,maxPrice);
                     <figure><img className='rounded-xl h-60' src={room.image} alt="Album"/></figure></Link>
                     <div className="card-body">
                         <h2 className="card-title">{room.title}</h2>
-                        <p>{room.description.slice(0,60)}</p>
+                        <p>{room?.description?.slice(0,60)}</p>
                         <div className='flex justify-between'>
                         <p className='flex items-center gap-2 font-medium'><TiStarFullOutline className='text-xl text-[#ffaf38]' /> <span>{room.rating}</span> <span>({room.review})</span></p>
                         <p className='font-medium'>${room.price}/ <span className='text-xs'>Night</span></p>

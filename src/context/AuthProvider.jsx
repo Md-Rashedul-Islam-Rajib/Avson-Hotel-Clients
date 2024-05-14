@@ -3,6 +3,7 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import axios from "axios";
 
 
 
@@ -29,7 +30,7 @@ const AuthProvider = ({children}) => {
         const logOutUser = () => {
             signOut(auth)
             .then(result=>{
-                console.log(result);
+            
                 setUser(null)
             })
         }
@@ -52,11 +53,24 @@ const AuthProvider = ({children}) => {
     
         useEffect(()=>{
             const unsubscribe = onAuthStateChanged(auth, (currentUser)=>{
-                if(currentUser){
-                    setUser(currentUser)
-                    
-                }
-                setLoading(false)
+                
+               const userEmail = currentUser?.email || user?.email;
+               const loggedUser = {email:userEmail};
+               setUser(currentUser);
+               setLoading(false);
+               if(currentUser){
+                
+                axios.post('https://newassignment-11.vercel.app/jwt',loggedUser, {withCredentials: true})
+                .then(res=> {
+                    console.log(res.data);
+                })
+               }else{
+                axios.post('https://newassignment-11.vercel.app/logout',loggedUser, {withCredentials: true})
+                .then(res=>{
+                    console.log(res.data);
+                })
+               }
+
             });
             return ()=> {
                 unsubscribe();

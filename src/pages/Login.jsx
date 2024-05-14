@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 
 const Login = () => {
@@ -28,6 +29,14 @@ const Login = () => {
       logInUser(email, password)
         .then((result) => {
           setUser(result.user);
+          // const user = {email};
+          // axios.post('https://newassignment-11.vercel.app/jwt',user, {withCredentials: true})
+          // .then(res=>{
+          //   console.log(res.data);
+          //   if(res.data.success){
+          //     navigate(destination);
+          //   }
+          // })
           toast.success("Log in Successfully as " + email); 
           navigate(destination);
         })

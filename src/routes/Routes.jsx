@@ -20,25 +20,23 @@ export const router = createBrowserRouter([
                 {
                     path : '/',
                     element: <Home></Home>,
-                    loader: ()=> fetch('https://assignment-11-server-snowy.vercel.app/rooms')
+                    loader: ()=> fetch('https://newassignment-11.vercel.app/rooms')
                 },
                 {
                     path: '/rooms',
                     element: <Room></Room>,
-                    loader: ()=> fetch('https://assignment-11-server-snowy.vercel.app/rooms')
+                    loader: ()=> fetch('https://newassignment-11.vercel.app/rooms')
                 },{
                     path: '/room/:id',
-                    element: <PrivateRoute>
-                        <RoomDetails></RoomDetails>
-                    </PrivateRoute>,
-                    loader: ({params})=> fetch(`https://assignment-11-server-snowy.vercel.app/room/${params.id}`)
+                    element: 
+                        <RoomDetails></RoomDetails>,
+                    loader: ({params})=> fetch(`https://newassignment-11.vercel.app/room/${params.id}`)
                 },
                 {
                     path: '/bookings',
                     element: <PrivateRoute>
                         <Booking></Booking>
-                    </PrivateRoute>,
-                    loader: ()=> fetch('https://assignment-11-server-snowy.vercel.app/bookings')
+                    </PrivateRoute>
                 },
                 {
                     path: '/login',
