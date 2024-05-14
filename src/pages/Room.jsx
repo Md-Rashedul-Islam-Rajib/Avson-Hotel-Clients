@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { TiStarFullOutline } from 'react-icons/ti';
 import { Link, useLoaderData } from 'react-router-dom';
@@ -76,7 +76,7 @@ console.log(minPrice,maxPrice);
                         <p className='font-medium'>${room.price}/ <span className='text-xs'>Night</span></p>
                         </div>
                         <div className="card-actions justify-end">
-                        {/* <button className="btn btn-primary">Listen</button> */}
+                      
                         </div>
                     </div>
                     </div>)

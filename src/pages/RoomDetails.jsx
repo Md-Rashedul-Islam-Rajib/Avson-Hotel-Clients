@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useState } from "react";
+import React, { forwardRef, useContext, useEffect, useState } from "react";
 import { FaExpand } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 import { LuBath } from "react-icons/lu";
@@ -13,12 +13,16 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Location from "../components/Location";
 import Rating from 'react-rating-stars-component';
-import ReviewBanner from "../components/ReviewBanner";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/bundle";
 
 const RoomDetails = () => {
   const data = useLoaderData();
   const { user } = useContext(AuthContext);
-  
+  console.log(user);
+
   const {
     _id,
     title,
@@ -31,8 +35,10 @@ const RoomDetails = () => {
     bedroom_count,
     bathroom_count,
     amenity,
+    review
   } = data;
 
+  
   const [selectedDate, setSelectedDate] = useState(
     new Date("2024-02-29")
   );
@@ -75,6 +81,7 @@ const RoomDetails = () => {
 
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
+  const [bookinguser,setBookinguser] = useState('');
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -91,12 +98,13 @@ const RoomDetails = () => {
         reviewText,
         rating,
         user: user?.displayName,
-        email: user?.email
+        email: user?.email,
+        photo : user?.photoURL
     };
-    const review = [...reviewSet];
+    // const review = [...reviewSet];
 
     axios
-    .put(`http://localhost:5000/room/${_id}`, review)
+    .put(`http://localhost:5000/room/${_id}`, reviewSet)
     .then(data=>{
       console.log(data.data);
       if(data?.data?.modifiedCount > 0){
@@ -118,10 +126,14 @@ const RoomDetails = () => {
 
 
   // verify
-  axios.get(`http://localhost:5173/bookings/${_id}`)
+  useEffect(()=>{
+    axios.get(`http://localhost:5000/bookings/${_id}`)
   .then(res=>{
-    console.log(res.data);
+    setBookinguser(res.data);
   })
+  },[_id])
+
+// console.log(bookinguser);
 
   return (
     <div> 
@@ -242,10 +254,69 @@ const RoomDetails = () => {
               {/* review section */}
 
               <div>
-                <ReviewBanner></ReviewBanner>
+            
+                <div>
+                    <h2 className='text-2xl font-bold text-center'>Customer Reviews</h2>
+                </div>
+                <div>
+                <Swiper
+          navigation={true}
+          spaceBetween={30}
+          centeredSlides={true}
+          
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Autoplay, Pagination, Navigation]}
+          loop={true}
+        >
+          {
+            review?.map((item,idx)=><SwiperSlide key={idx}>
+              <div className="container flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 text-gray-900 bg-gray-100">
+	<div className="flex justify-between p-4">
+		<div className="flex space-x-4">
+			<div>
+				<img src={item?.photo? item?.photo:"https://source.unsplash.com/100x100/?portrait"} alt="" className="object-cover w-12 h-12 rounded-full bg-gray-500" />
+			</div>
+			<div>
+				<h4 className="">{item?.user}</h4>
+				{/* <span className="text-xs text-gray-400">2 days ago</span> */}
+			</div>
+		</div>
+		<div className="flex items-center space-x-2 text-yellow-500">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current">
+				<path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
+			</svg>
+			<span className="text-xl font-bold">{item?.rating}</span>
+		</div>
+	</div>
+	<div className="p-4 space-y-2 text-gray-800 font-bold">
+		<p>{item?.reviewText}</p>
+		
+	</div>
+</div>
+            </SwiperSlide>)
+          }
+          {/* <SwiperSlide>
+          <div className="hero min-h-screen" style={{backgroundImage: 'url(/slide3.jpg)'}}>
+  <div className="hero-overlay bg-opacity-60"></div>
+  <div className="hero-content text-center text-neutral-content">
+    <div className="max-w-md">
+      <h1 className="mb-5 text-5xl font-bold">Indulge in Comfort</h1>
+      <p className="mb-5">Unwind in your cozy haven. Avson Hotel's room service delivers delicious meals and refreshing beverages straight to your door, 24/7. Explore our extensive menu and savor exquisite flavors without leaving your room</p>
+      <button className="btn bg-[#fea116] border-0 text-white">Get Started</button>
+    </div>
+  </div>
+</div>
+          </SwiperSlide> */}
+  
+          
+          
+        </Swiper>
+                </div>
+                
 
-
-              </div>
+        </div>
 
               <div>
 
