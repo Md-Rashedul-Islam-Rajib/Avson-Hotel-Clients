@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
+
 import { TiStarFullOutline } from 'react-icons/ti';
 import { Link, useLoaderData } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ console.log(minPrice,maxPrice);
     };
 
     const getProducts = () => {
-        fetch(`http://localhost:5000/filter/${minPrice}/${maxPrice}`)
+        fetch(`https://assignment-11-server-snowy.vercel.app/filter/${minPrice}/${maxPrice}`)
             .then(response => response.json())
             .then(data => {
                 setProducts(data);
@@ -33,7 +33,7 @@ console.log(minPrice,maxPrice);
 
             <div className='my-10'>
             <h1 className='font-semibold mb-8'>Price Filter</h1>
-            <div>
+            <div className='flex flex-col gap-6 lg:inline-block '>
             <label htmlFor="minPrice">Min Price</label>
             <input
             className='input input-bordered ml-4'

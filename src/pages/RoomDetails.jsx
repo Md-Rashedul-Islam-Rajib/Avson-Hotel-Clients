@@ -5,7 +5,6 @@ import { LuBath } from "react-icons/lu";
 import { MdOutlineBedroomParent } from "react-icons/md";
 import { useLoaderData } from "react-router-dom";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import { SlCalender } from "react-icons/sl";
 import { AuthContext } from "../context/AuthProvider";
@@ -13,11 +12,13 @@ import { BsCashCoin } from "react-icons/bs";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Location from "../components/Location";
+import Rating from 'react-rating-stars-component';
+import ReviewBanner from "../components/ReviewBanner";
 
 const RoomDetails = () => {
   const data = useLoaderData();
   const { user } = useContext(AuthContext);
-  console.log(user);
+  
   const {
     _id,
     title,
@@ -43,17 +44,18 @@ const RoomDetails = () => {
   const handleBooking = () => {
     const bookingDetails = {
       image: image,
-      
+      id: _id,
       title: title,
       description: description,
       date: selectedDate,
       email: user?.email,
       name: user?.displayName,
+      price: price
     };
 
     console.log(bookingDetails);
     axios
-    .post('http://localhost:5000/bookings',bookingDetails)
+    .post('https://assignment-11-server-snowy.vercel.app/bookings',bookingDetails)
     .then(res=>{
       if(res.data.insertedId){
         Swal.fire({
@@ -68,7 +70,63 @@ const RoomDetails = () => {
     )
   };
 
+
+  // review part
+
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState('');
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
+  const handleReviewTextChange = (event) => {
+    setReviewText(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    const reviewSet = {
+        reviewText,
+        rating,
+        user: user?.displayName,
+        email: user?.email
+    };
+    const review = [...reviewSet];
+
+    axios
+    .put(`http://localhost:5000/room/${_id}`, review)
+    .then(data=>{
+      console.log(data.data);
+      if(data?.data?.modifiedCount > 0){
+        Swal.fire({
+          title: "Good job!",
+          text: "You left a review successfully",
+          icon: "success"
+        });
+      }
+  }).catch((error) => {
+      // An error occurred
+      // ...
+    });
+    console.log(reviewSet);
+    
+    setRating(0);
+    setReviewText('');
+  };
+
+
+  // verify
+  axios.get(`http://localhost:5173/bookings/${_id}`)
+  .then(res=>{
+    console.log(res.data);
+  })
+
   return (
+    <div> 
+
+
     <div className="grid lg:grid-cols-6 gap-6 lg:m-20 my-12">
       <div className="lg:col-span-4 flex flex-col gap-6 md:p-8 lg:p-0 lg:gap-12">
         <div className="flex justify-between font-medium">
@@ -179,6 +237,55 @@ const RoomDetails = () => {
 
 
       </div>
+    </div>
+
+              {/* review section */}
+
+              <div>
+                <ReviewBanner></ReviewBanner>
+
+
+              </div>
+
+              <div>
+
+<div className='flex flex-col items-center'>
+    <div>
+      <h2 className='font-semibold text-2xl mb-4'>Leave a Review</h2>
+      </div>
+
+      <div>
+      <form onSubmit={handleSubmit}>
+
+      <div>
+          
+          <textarea
+            value={reviewText}
+            onChange={handleReviewTextChange}
+            rows={4}
+            cols={50}
+          />
+        </div>
+
+
+        <div>
+          
+          <Rating
+            count={5}
+            onChange={handleRatingChange}
+            size={24}
+            activeColor="#ffd700"
+          />
+        </div>
+        
+        <button className='btn my-8' type="submit">Submit Review</button>
+      </form>
+
+      </div>
+
+    </div>
+    </div>
+
     </div>
   );
 };
