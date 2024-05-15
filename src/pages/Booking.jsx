@@ -23,7 +23,7 @@ const Booking = () => {
   const {user} = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
- const url='http://localhost:5000/bookings'
+ const url='https://newassignment-11.vercel.app/bookings'
  useEffect(()=>{
   axios.get(url,{withCredentials:true})
   .then(res=>{
@@ -45,7 +45,7 @@ const handleUpdate = (_id) => {
   console.log(_id);
     const updatedDate = {date:selectedDate};
    axios
-   .put(`http://localhost:5000/bookings/${_id}`,updatedDate,{withCredentials:true})
+   .put(`https://newassignment-11.vercel.app/bookings/${_id}`,updatedDate,{withCredentials:true})
    .then(data=>{
     console.log(data.data);
     if(data?.data?.modifiedCount > 0){
@@ -88,7 +88,7 @@ const handleCancel = (_id) => {
       confirmButtonText: 'Yes, cancel it'
     }).then((result)=>{
       if(result.isConfirmed){
-        axios.delete(`http://localhost:5000/bookings/${_id}`)
+        axios.delete(`https://newassignment-11.vercel.app/bookings/${_id}`)
     .then(data => {
       console.log(data.data)
       if(data.data.deletedCount > 0){
@@ -157,7 +157,7 @@ const handleReview = (id) => {
  
 
   axios
-    .post(`http://localhost:5000/reviews`, reviewSet)
+    .post(`https://newassignment-11.vercel.app/reviews`, reviewSet)
 
     .then((res) => {
       if (res.data.insertedId) {

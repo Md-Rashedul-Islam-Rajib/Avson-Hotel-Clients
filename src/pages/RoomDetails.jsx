@@ -46,7 +46,7 @@ const RoomDetails = () => {
 
 
   const [roomData, setRoomData] = useState([]);
-  const url=`http://localhost:5000/room/${_id}`
+  const url=`https://newassignment-11.vercel.app/room/${_id}`
  useEffect(()=>{
   axios.get(url,{withCredentials:true})
   .then(res=>{
@@ -99,7 +99,7 @@ const RoomDetails = () => {
         
         axios
           .post(
-            "http://localhost:5000/bookings",
+            "https://newassignment-11.vercel.app/bookings",
             bookingDetails
           )
           .then((res) => {
@@ -124,7 +124,7 @@ const RoomDetails = () => {
 
  const [reviewData, setReviewData] = useState([]);
  useEffect(()=>{
-  axios.get(`http://localhost:5000/reviews/${_id}`)
+  axios.get(`https://newassignment-11.vercel.app/reviews/${_id}`)
   .then(res=>{
     setReviewData(res.data);
   })
@@ -134,7 +134,7 @@ const RoomDetails = () => {
   const [bookinguser, setBookinguser] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/bookings/${_id}`)
+    axios.get(`https://newassignment-11.vercel.app/bookings/${_id}`)
     .then((res) => {
       setBookinguser(res.data);
     });
