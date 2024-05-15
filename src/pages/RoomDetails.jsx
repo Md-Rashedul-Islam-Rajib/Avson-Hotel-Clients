@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import { FaExpand } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 import { LuBath } from "react-icons/lu";
@@ -19,7 +19,6 @@ import "swiper/css";
 import "swiper/css/bundle";
 import person from '../assets/person.png'
 import toast from "react-hot-toast";
-import { Helmet } from "react-helmet-async";
 
 const RoomDetails = () => {
   const data = useLoaderData();
@@ -44,19 +43,8 @@ const RoomDetails = () => {
   } = data;
 
 
+console.log(data);
 
-  const [roomData, setRoomData] = useState([]);
-  const url=`https://newassignment-11.vercel.app/room/${_id}`
- useEffect(()=>{
-  axios.get(url,{withCredentials:true})
-  .then(res=>{
-    const alldata = res.data;
-    // setBookings(alldata.filter(item=> item.email==user.email))
-    setRoomData(alldata);
-  })
- },[url]);
-
-  
 
 
   
@@ -140,7 +128,7 @@ const RoomDetails = () => {
     });
   }, [_id]);
 
-  // console.log(roomData?.data?.totalReview)
+  // console.log(data?.data?.totalReview)
 
   return (
     <div>
@@ -152,27 +140,27 @@ const RoomDetails = () => {
         <div className="lg:col-span-4 flex flex-col gap-6 md:p-8 lg:p-0 lg:gap-12">
           <div className="flex justify-between font-medium">
             <div className="flex items-center gap-4">
-              <FaExpand /> <span>{roomData?.data?.room_size}</span>
+              <FaExpand /> <span>{data?.data?.room_size}</span>
             </div>
 
             <div className="flex items-center gap-4">
-              <MdOutlineBedroomParent /> <span>{roomData?.data?.bedroom_count} Bedroom(s)</span>
+              <MdOutlineBedroomParent /> <span>{data?.data?.bedroom_count} Bedroom(s)</span>
             </div>
 
             <div className="flex items-center gap-4">
-              <LuBath /> <span>{roomData?.data?.bathroom_count} Bathroom(s)</span>
+              <LuBath /> <span>{data?.data?.bathroom_count} Bathroom(s)</span>
             </div>
           </div>
 
           <div>
-            <h2 className="text-3xl font-bold mb-4">{roomData?.data?.title}</h2>
-            <p className="text-lg">{roomData?.data?.description}</p>
+            <h2 className="text-3xl font-bold mb-4">{data?.data?.title}</h2>
+            <p className="text-lg">{data?.data?.description}</p>
           </div>
 
           <div>
             <h2 className="text-3xl font-bold mb-4">Amenity</h2>
             <div className="grid grid-cols-2 md:grid-cols-4">
-              {roomData?.data?.amenity.map((item, idx) => (
+              {data?.data?.amenity.map((item, idx) => (
                 <p key={idx} className="flex items-center gap-3">
                   {" "}
                   <GiCheckMark className="text-green-500" />{" "}
@@ -183,10 +171,10 @@ const RoomDetails = () => {
           </div>
 
           <div className="relative">
-            <img src={roomData?.data?.image} alt="" />
-            {roomData?.data?.offer && (
+            <img src={data?.data?.image} alt="" />
+            {data?.data?.offer && (
               <div className="bg-gradient-to-r from-[#ad8e3d] via-[#dec75e] via-[#f3ec8d] h-16  to-[#c6a136] w-[850px] clip-path absolute top-5 right-0">
-                <p className="text-right font-bold">{roomData?.data?.offer}</p>
+                <p className="text-right font-bold">{data?.data?.offer}</p>
               </div>
             )}
           </div>
@@ -195,7 +183,7 @@ const RoomDetails = () => {
         <div className="lg:col-span-2">
           <div className="bg-[#111827] text-white">
             <p className="text-3xl font-bold ml-8 py-9 md:text-center lg:text-left">
-              {roomData?.data?.price}$ / <sub className="text-lg font-normal">Night</sub>
+              {data?.data?.price}$ / <sub className="text-lg font-normal">Night</sub>
             </p>
           </div>
 
@@ -218,7 +206,7 @@ const RoomDetails = () => {
 
 
 
-            {roomData?.found===true ? <button className="bg-[#fea116] btn text-white " disabled='disabled'>Unavailable</button>: <button onClick={() => {
+            {data?.found===true ? <button className="bg-[#fea116] btn text-white " disabled='disabled'>Unavailable</button>: <button onClick={() => {
                 document.getElementById("my_modal_1").showModal();
               }}
               className="bg-[#fea116] btn text-white">Book Now</button>}

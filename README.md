@@ -32,3 +32,4 @@ Resources:
 - [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)
 - [react-rating-stars-component](https://www.npmjs.com/package/react-rating-stars-component)
 - [leaflet](https://leafletjs.com/)
+- [AOS](https://michalsnik.github.io/aos/)

@@ -2,6 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import newsletterimage from '../assets/newsletter.jpg'
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
 
 const Newsletter = () => {
 
