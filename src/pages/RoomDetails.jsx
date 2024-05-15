@@ -21,7 +21,7 @@ import person from '../assets/person.png'
 
 const RoomDetails = () => {
   const data = useLoaderData();
-  console.log('single data',data);
+ 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -107,61 +107,25 @@ const RoomDetails = () => {
 
   // review part
 
-  // const [rating, setRating] = useState(0);
-  // const [reviewText, setReviewText] = useState("");
-
-  // const handleRatingChange = (newRating) => {
-  //   setRating(newRating);
-  // };
-
-  // const handleReviewTextChange = (event) => {
-  //   setReviewText(event.target.value);
-  // };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   const reviewSet = {
-  //     reviewText: reviewText,
-  //     rating : rating,
-  //     user: user?.displayName,
-  //     email: user?.email,
-  //     photo: user?.photoURL,
-  //   };
-  //   // const review = [...reviewSet];
-
-  //   axios
-  //     .put(`https://newassignment-11.vercel.app/room/${_id}`, reviewSet)
-  //     .then((data) => {
-        
-  //       if (data?.data?.modifiedCount > 0) {
-  //         Swal.fire({
-  //           title: "Good job!",
-  //           text: "You left a review successfully",
-  //           icon: "success",
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       // An error occurred
-  //       // ...
-  //     });
-    
-
-  //   setRating(0);
-  //   setReviewText("");
-  // };
+ const [reviewData, setReviewData] = useState([]);
+ useEffect(()=>{
+  axios.get(`http://localhost:5000/reviews/${_id}`)
+  .then(res=>{
+    setReviewData(res.data);
+  })
+ },[])
 
   // verify
   const [bookinguser, setBookinguser] = useState("");
 
   useEffect(() => {
-    axios.get(`https://newassignment-11.vercel.app/bookings/${_id}`).then((res) => {
+    axios.get(`http://localhost:5000/bookings/${_id}`)
+    .then((res) => {
       setBookinguser(res.data);
     });
   }, [_id]);
 
-  console.log(roomData?.data?.totalReview)
+  // console.log(roomData?.data?.totalReview)
 
   return (
     <div>
@@ -298,7 +262,7 @@ const RoomDetails = () => {
 
       {/* review section */}
 
-      {roomData?.data?.totalReview && <div className="my-8">
+      {reviewData.length > 0 && <div className="my-8">
         <div>
           <h2 className="text-2xl font-bold text-center">Customer Reviews</h2>
         </div>
@@ -313,7 +277,7 @@ const RoomDetails = () => {
             modules={[Autoplay, Pagination, Navigation]}
             loop={true}
           >
-            {roomData?.data?.totalReview?.map((item, idx) => (
+            {reviewData?.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <div className="container flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 text-gray-900 bg-gray-100">
                   <div className="flex justify-between p-4">

@@ -13,25 +13,23 @@ import Rating from "react-rating-stars-component";
 
 
 const Booking = () => {
+
+
+
+
   const {user} = useContext(AuthContext);
 
   const [bookings, setBookings] = useState([]);
- const url='https://newassignment-11.vercel.app/bookings'
+ const url='http://localhost:5000/bookings'
  useEffect(()=>{
   axios.get(url,{withCredentials:true})
   .then(res=>{
     const alldata = res.data;
     setBookings(alldata.filter(item=> item.email==user.email))
   })
- },[url]);
+ },[]);
 
- console.log(bookings);
 
-  // const singleData= bookings.map(prod=>prod._id);
-  // const id = singleData[0];
-  // console.log(id);
-  
-console.log(bookings);
 
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -41,6 +39,7 @@ console.log(bookings);
   };
 
 const handleUpdate = (_id) => {
+  console.log(_id);
     const updatedDate = {date:selectedDate};
    axios
    .put(`http://localhost:5000/bookings/${_id}`,updatedDate,{withCredentials:true})
@@ -109,8 +108,8 @@ const handleReviewTextChange = (event) => {
   setReviewText(event.target.value);
 };
 
-const handleSubmit = (_id) => {
-  
+const handleReview = (id) => {
+  console.log(id);
 
   const reviewSet = {
     reviewText: reviewText,
@@ -118,26 +117,30 @@ const handleSubmit = (_id) => {
     user: user?.displayName,
     email: user?.email,
     photo: user?.photoURL,
+    id: id
   };
-  // const review = [...reviewSet];
+ 
 
   axios
-    .patch(`http://localhost:5000/room/${_id}`, reviewSet)
-    .then((data) => {
-      
-      if (data?.data?.modifiedCount > 0) {
+    .post(`http://localhost:5000/reviews`, reviewSet)
+
+    .then((res) => {
+      if (res.data.insertedId) {
         Swal.fire({
-          title: "Good job!",
-          text: "You left a review successfully",
           icon: "success",
+          title: "You left a review successfully",
+          showConfirmButton: false,
+          timer: 1500,
         });
       }
     })
+    
     .catch((error) => {
       // An error occurred
       // ...
     });
-
+   setRating(0);
+    setReviewText("");
 };
 
   return (
@@ -193,35 +196,37 @@ const handleSubmit = (_id) => {
 
 
                 {/* button */}
-                <th>
+                <th className="flex justify-evenly">
                 <button onClick={() => {
-                document.getElementById("my_modal_1").showModal();
+              document.getElementById(item._id).showModal();
               }}
-               className="btn btn-ghost btn-xs">
+               className="btn btn-ghost btn-xs bg-[#fea116] text-white">
                 Update Date
                 </button>
-
+                
 
                   <button onClick={()=>{handleCancel(item._id)}}
-               className="btn btn-ghost btn-xs">
+               className="btn btn-ghost btn-xs bg-[#111827] text-white">
                 Cancel
                 </button>
 
                 <button onClick={() => {
-                document.getElementById("my_modal_2").showModal();
+                document.getElementById(item.id).showModal();
               }}
-               className="btn btn-ghost btn-xs">
+               className="btn btn-ghost btn-xs bg-[#fea116] text-white">
                   Add Review
                 </button>
+                
                 </th>
 
 
                 {/* modal */}
                 <dialog
-            id="my_modal_1"
+            id={item._id}
             className="modal modal-bottom sm:modal-middle"
           >
             <div className="modal-box h-96">
+              <p className="mb-4">Please select the date </p>
             <DatePicker
               showIcon
               icon=<SlCalender className="text-lg mt-2 mr-2" />
@@ -231,11 +236,14 @@ const handleSubmit = (_id) => {
               onChange={handleDateChange}
               dateFormat="dd/MM/yyyy"
             />
+
               <div className="modal-action">
                 <form method="dialog">
-                  <button onClick={()=>{handleUpdate(item._id)}} className="btn">
-                    Yes
+                  <button onClick={()=>{handleUpdate(item._id)}} className="btn bg-[#fea116] text-white">
+                    Confirm
                   </button>
+
+                  <button className="btn ml-4 bg-[#111827] text-white"> Cancel </button>
 
                   
                 </form>
@@ -244,7 +252,7 @@ const handleSubmit = (_id) => {
                 </dialog>
 
                 <dialog
-            id="my_modal_2"
+            id={item.id}
             className="modal modal-bottom sm:modal-middle"
           >
             <div className="modal-box h-96">
@@ -282,9 +290,10 @@ const handleSubmit = (_id) => {
       </div>
               <div className="modal-action">
                 <form method="dialog">
-                  <button onClick={()=>{handleUpdate(item._id)}} className="btn">
+                  <button onClick={()=>{handleReview(item.id)}} className="btn">
                     Submit 
                   </button>
+                  
 
                   
                 </form>
