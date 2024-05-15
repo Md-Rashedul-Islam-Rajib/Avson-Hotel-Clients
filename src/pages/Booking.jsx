@@ -6,6 +6,9 @@ import { SlCalender } from "react-icons/sl";
 import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthProvider";
 import Rating from "react-rating-stars-component";
+import toast from "react-hot-toast";
+import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 
 
@@ -18,7 +21,7 @@ const Booking = () => {
 
 
   const {user} = useContext(AuthContext);
-
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
  const url='http://localhost:5000/bookings'
  useEffect(()=>{
@@ -27,12 +30,12 @@ const Booking = () => {
     const alldata = res.data;
     setBookings(alldata.filter(item=> item.email==user.email))
   })
- },[]);
+ },[user.email,selectedDate]);
 
 
+ 
 
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
+ 
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -59,35 +62,50 @@ const handleUpdate = (_id) => {
   
 }
 
-const handleCancel = (_id) => {
-  console.log(_id);
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, cancel it'
-  }).then((result)=>{
-    if(result.isConfirmed){
-      axios.delete(`http://localhost:5000/bookings/${_id}`)
-  .then(data => {
-    console.log(data.data)
-    if(data.data.deletedCount > 0){
 
-      Swal.fire({
-        title: "Deleted!",
-        text: "Your reservation canceled successfully!",
-        icon: "success"
-      })
-     
-    }
-  })
-  const remaining = bookings.filter((craft)=>craft._id !== _id);
-  setBookings(remaining);
-    }
-  });
+const handleCancel = (_id) => {
+ 
+  const currentDate = moment();
+  const selectedMomentDate = moment(selectedDate);
+
+
+ 
+  const differenceInDays = selectedMomentDate.diff(currentDate, 'days');
+
+  
+  if (differenceInDays > 1) {
+    return toast.error("You can't cancel your reservation only before one day");
+  }
+
+  
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it'
+    }).then((result)=>{
+      if(result.isConfirmed){
+        axios.delete(`http://localhost:5000/bookings/${_id}`)
+    .then(data => {
+      console.log(data.data)
+      if(data.data.deletedCount > 0){
+  
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your reservation canceled successfully!",
+          icon: "success"
+        })
+       
+      }
+    })
+    const remaining = bookings.filter((craft)=>craft._id !== _id);
+    setBookings(remaining);
+      }
+    });
+  
   
 }
 
@@ -109,7 +127,23 @@ const handleReviewTextChange = (event) => {
 };
 
 const handleReview = (id) => {
-  console.log(id);
+  
+  const formatDate = (date) => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+    const day = days[date.getDay()];
+    const dayOfMonth = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0 hours)
+  
+    return `${day}, ${dayOfMonth} ${month}, ${year} ${hours}:${minutes < 10 ? '0' : ''}${minutes}${ampm}`;
+  }
 
   const reviewSet = {
     reviewText: reviewText,
@@ -117,7 +151,8 @@ const handleReview = (id) => {
     user: user?.displayName,
     email: user?.email,
     photo: user?.photoURL,
-    id: id
+    id: id,
+    postingTime : formatDate(new Date())
   };
  
 
@@ -145,6 +180,11 @@ const handleReview = (id) => {
 
   return (
     <div>
+
+{/* <Helmet>
+                <title>Booking Page | Avson Hotel & Room Services</title>
+            </Helmet> */}
+
       {bookings?.length=== 0? <div className="h-screen w-screen flex justify-center mt-10">
               <h2 className="text-3xl font-semibold"> No room booked yet</h2>
               </div>:<div className="overflow-x-auto">
@@ -192,7 +232,7 @@ const handleReview = (id) => {
                     {item?.email}
                   </span>
                 </td>
-                <td>{item?.date.slice(0,10)}</td>
+                <td>{moment(item?.date).format('DD-MM-YYYY')}</td>
 
 
                 {/* button */}
@@ -317,40 +357,6 @@ export default Booking;
 
 
 
-// {user?.email==bookinguser.email && 
-// <div className="px-4 md:px-0"> 
-//         <div className="flex flex-col items-center">
-//           <div>
-//             <h2 className="font-semibold text-2xl mb-4">Leave a Review</h2>
-//           </div>
 
-//           <div>
-//             <form onSubmit={handleSubmit}>
-//               <div>
-//                 <textarea
-//                 className="input-bordered"
-//                   value={reviewText}
-//                   onChange={handleReviewTextChange}
-//                   rows={4}
-//                   cols={35}
-//                 />
-//               </div>
-
-//               <div>
-//                 <Rating
-//                   count={5}
-//                   onChange={handleRatingChange}
-//                   size={24}
-//                   activeColor="#ffd700"
-//                 />
-//               </div>
-
-//               <button className="btn my-8" type="submit">
-//                 Submit Review
-//               </button>
-//             </form>
-//           </div>
-//         </div>
-//       </div>}
 
 

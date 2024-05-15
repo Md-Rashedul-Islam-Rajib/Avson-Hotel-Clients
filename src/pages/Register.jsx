@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from "../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const {createUser, logOutUser} = useContext(AuthContext);
@@ -52,6 +53,10 @@ const Register = () => {
       className="hero min-h-screen"
       style={{ backgroundImage: "url(/register.jpg)" }}
     >
+
+            {/* <Helmet>
+                <title>Register | Avson Hotel & Room Services</title>
+            </Helmet> */}
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-neutral-content">
         <div className="hero">

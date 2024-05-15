@@ -18,6 +18,8 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/bundle";
 import person from '../assets/person.png'
+import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const RoomDetails = () => {
   const data = useLoaderData();
@@ -58,47 +60,60 @@ const RoomDetails = () => {
 
 
   
-  const [selectedDate, setSelectedDate] = useState(new Date("2024-02-29"));
-
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const isDateAhead = (selectedDate) => {
+    const currentDate = new Date();
+    if (selectedDate >= currentDate) {
+      return true; 
+    } else {
+      return false;
+    }
+  }
+  const isAhead = isDateAhead(selectedDate);
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleBooking = () => {
-    
 
+  const handleBooking = () => {
     if(!user){
       navigate('/login')
     }else{
-      const bookingDetails = {
-        image: image,
-        id: _id,
-        title: title,
-        description: description,
-        date: selectedDate,
-        email: user?.email,
-        name: user?.displayName,
-        price: price,
-        isAvailable: true
-      };
-  
-      
-      axios
-        .post(
-          "http://localhost:5000/bookings",
-          bookingDetails
-        )
-        .then((res) => {
-          if (res.data.insertedId) {
-            Swal.fire({
-              icon: "success",
-              title: "Your room booked successfully",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
-  navigate('/bookings')
+      if(!isAhead){
+        return toast.error('Please choose a valid date')
+      }
+      else{
+        const bookingDetails = {
+          image: image,
+          id: _id,
+          title: title,
+          description: description,
+          date: selectedDate,
+          email: user?.email,
+          name: user?.displayName,
+          price: price,
+          isAvailable: true,
+         
+        };
+    
+        
+        axios
+          .post(
+            "http://localhost:5000/bookings",
+            bookingDetails
+          )
+          .then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire({
+                icon: "success",
+                title: "Your room booked successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+    navigate('/bookings')
+      }
     }
 
 
@@ -129,6 +144,10 @@ const RoomDetails = () => {
 
   return (
     <div>
+
+{/*         <Helmet>
+                <title>Room Details| Avson Hotel & Room Services</title>
+            </Helmet> */}
       <div className="grid lg:grid-cols-6 gap-6 lg:m-20 my-12">
         <div className="lg:col-span-4 flex flex-col gap-6 md:p-8 lg:p-0 lg:gap-12">
           <div className="flex justify-between font-medium">
@@ -180,7 +199,7 @@ const RoomDetails = () => {
             </p>
           </div>
 
-          <div className="flex justify-center my-4">
+          <div className="flex justify-center my-4 z-10">
             <DatePicker
               showIcon
               icon=<SlCalender className="text-lg mt-2 mr-2" />
@@ -254,7 +273,7 @@ const RoomDetails = () => {
             </div>
           </dialog>
 
-          <div className="mt-8 flex justify-center ">
+          <div className="mt-8 flex justify-center lg:mt-48">
             <Location></Location>
           </div>
         </div>
@@ -295,7 +314,7 @@ const RoomDetails = () => {
                       </div>
                       <div>
                         <h4 className="">{item?.user}</h4>
-                        {/* <span className="text-xs text-gray-400">2 days ago</span> */}
+                        <span className="text-xs text-gray-400">{item?.postingTime}</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2 text-yellow-500">

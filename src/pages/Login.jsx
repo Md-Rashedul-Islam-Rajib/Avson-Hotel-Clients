@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 
 const Login = () => {
@@ -74,10 +75,20 @@ const Login = () => {
     };
 
     return (
+
+      <div>
+
+            {/* <Helmet>
+                <title>Login| Avson Hotel & Room Services</title>
+            </Helmet> */}
+      
         <div
-      className="hero min-h-screen"
+        className="hero min-h-screen"
       style={{ backgroundImage: "url(/login.jpg)" }}
     >
+
+            
+
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-neutral-content">
         <div className="hero">
@@ -154,6 +165,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
     );
 };

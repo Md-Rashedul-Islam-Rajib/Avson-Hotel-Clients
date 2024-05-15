@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import { TiStarFullOutline } from 'react-icons/ti';
 import { Link, useLoaderData } from 'react-router-dom';
@@ -29,7 +30,9 @@ const Room = () => {
     };
     return (
         <div className='mx-10'>
-            
+            {/* <Helmet>
+                <title>Rooms | Avson Hotel & Room Services</title>
+            </Helmet> */}
 
             <div className='my-10'>
             <h1 className='font-semibold mb-8'>Price Filter</h1>
