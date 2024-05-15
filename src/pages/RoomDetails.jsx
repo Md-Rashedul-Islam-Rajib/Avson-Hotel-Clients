@@ -40,10 +40,10 @@ const RoomDetails = () => {
     bathroom_count,
     amenity,
     totalReview,
-  } = data;
+  } = data.data;
 
 
-console.log(data);
+console.log(data.data);
 
 
 
@@ -84,7 +84,7 @@ console.log(data);
          
         };
     
-        
+        console.log(bookingDetails)
         axios
           .post(
             "https://newassignment-11.vercel.app/bookings",

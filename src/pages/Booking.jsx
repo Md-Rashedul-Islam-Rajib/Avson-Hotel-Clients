@@ -34,7 +34,7 @@ const Booking = () => {
 
 
  
-
+console.log(bookings);
  
 
   const handleDateChange = (date) => {
