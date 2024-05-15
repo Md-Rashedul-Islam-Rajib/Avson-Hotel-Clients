@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
 
 import { TiStarFullOutline } from 'react-icons/ti';
 import { Link, useLoaderData } from 'react-router-dom';
@@ -68,10 +71,18 @@ const Room = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                 {
                     products?.map((room,idx)=> 
-                    <div key={idx} className="card lg:card-side ">
+                    <div key={idx}
+                    data-aos="fade-down"
+      data-aos-anchor-placement="top-bottom"
+      data-aos-duration="1500"
+                    className="card lg:card-side ">
                     <Link to={`/room/${room._id}`}>
                     <figure><img className='rounded-xl h-60' src={room.image} alt="Album"/></figure></Link>
-                    <div className="card-body">
+                    <div 
+                    data-aos="fade-up"
+                    data-aos-anchor-placement="top-bottom"
+                    data-aos-duration="1500"
+                    className="card-body">
                         <h2 className="card-title">{room.title}</h2>
                         <p>{room?.description?.slice(0,60)}</p>
                         <div className='flex justify-between'>

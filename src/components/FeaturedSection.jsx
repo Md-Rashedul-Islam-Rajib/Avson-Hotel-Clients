@@ -1,4 +1,9 @@
 import { Link, useLoaderData } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
+
 
 
 const FeaturedSection = () => {
@@ -12,7 +17,11 @@ const FeaturedSection = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {
-                    rooms.map((room,idx)=> <div key={idx} className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100 mx-auto">
+                    rooms.map((room,idx)=> <div key={idx} 
+                    data-aos="zoom-in"
+      data-aos-anchor-placement="top-bottom"
+      data-aos-duration="1500"
+                    className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100 mx-auto">
                     <img src={room.image} alt="" className="object-cover object-center w-full rounded-t-md h-72 bg-gray-500" />
                     <div className="flex flex-col justify-between p-6 space-y-8">
                         <div className="space-y-2">
@@ -25,7 +34,11 @@ const FeaturedSection = () => {
                 }
             </div>
             <div className="flex justify-center my-8">
-            <Link to={`/rooms`}><button type="button" className="w-40 p-3 font-semibold tracking-wide rounded-md bg-[#fea116] text-white">Book Now</button></Link>
+            <Link to={`/rooms`}><button type="button"
+            data-aos="fade-down"
+            data-aos-anchor-placement="top-bottom"
+            data-aos-duration="1500"
+            className="w-40 p-3 font-semibold tracking-wide rounded-md bg-[#fea116] text-white">Book Now</button></Link>
             </div>
         </div>
     );
