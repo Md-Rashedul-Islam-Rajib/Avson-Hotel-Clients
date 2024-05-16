@@ -23,6 +23,7 @@ const Booking = () => {
   const {user} = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
+  const [refetch, setRefetch] = useState(null);
  const url='https://newassignment-11.vercel.app/bookings'
  useEffect(()=>{
   axios.get(url,{withCredentials:true})
@@ -30,7 +31,7 @@ const Booking = () => {
     const alldata = res.data;
     setBookings(alldata.filter(item=> item.email==user.email))
   })
- },[user.email,selectedDate]);
+ },[user.email,refetch]);
 
 
  
@@ -49,6 +50,7 @@ const handleUpdate = (_id) => {
    .then(data=>{
     console.log(data.data);
     if(data?.data?.modifiedCount > 0){
+      setRefetch(Date.now())
       Swal.fire({
         title: "Good job!",
         text: "Your reservation date updated successfully",
