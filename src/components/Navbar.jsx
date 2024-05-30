@@ -18,6 +18,7 @@ const Navbar = () => {
     <NavLink to='/'> <li>Home</li> </NavLink>
     <NavLink to='/rooms'> <li>Rooms</li> </NavLink>
     <NavLink to='/bookings'> <li>My Bookings</li> </NavLink>
+    <NavLink to='/favorites'> <li>My Wishlist</li> </NavLink>
     {!user && <NavLink to='register'> <li>Register</li> </NavLink>}
   
   </>

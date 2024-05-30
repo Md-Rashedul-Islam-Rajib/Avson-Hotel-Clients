@@ -1,4 +1,4 @@
-import {  useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaExpand } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 import { LuBath } from "react-icons/lu";
@@ -17,21 +17,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/bundle";
-import person from '../assets/person.png'
+import person from "../assets/person.png";
 import toast from "react-hot-toast";
+import { IoIosHeart } from "react-icons/io";
 
 const RoomDetails = () => {
   const data = useLoaderData();
- 
+
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-
 
   const {
     _id,
     title,
     description,
     price,
+    rating,
+    review,
     room_size,
     availability,
     image,
@@ -42,35 +44,29 @@ const RoomDetails = () => {
     totalReview,
   } = data.data;
 
+  console.log(data.data);
 
-console.log(data.data);
-
-
-
-  
   const [selectedDate, setSelectedDate] = useState(new Date());
   const isDateAhead = (selectedDate) => {
     const currentDate = new Date();
     if (selectedDate >= currentDate) {
-      return true; 
+      return true;
     } else {
       return false;
     }
-  }
+  };
   const isAhead = isDateAhead(selectedDate);
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-
   const handleBooking = () => {
-    if(!user){
-      navigate('/login')
-    }else{
-      if(!isAhead){
-        return toast.error('Please choose a valid date')
-      }
-      else{
+    if (!user) {
+      navigate("/login");
+    } else {
+      if (!isAhead) {
+        return toast.error("Please choose a valid date");
+      } else {
         const bookingDetails = {
           image: image,
           id: _id,
@@ -81,15 +77,11 @@ console.log(data.data);
           name: user?.displayName,
           price: price,
           isAvailable: true,
-         
         };
-    
-        console.log(bookingDetails)
+
+        console.log(bookingDetails);
         axios
-          .post(
-            "https://newassignment-11.vercel.app/bookings",
-            bookingDetails
-          )
+          .post("https://newassignment-11.vercel.app/bookings", bookingDetails)
           .then((res) => {
             if (res.data.insertedId) {
               Swal.fire({
@@ -100,40 +92,71 @@ console.log(data.data);
               });
             }
           });
-    navigate('/bookings')
+        navigate("/bookings");
       }
     }
-
-
-
   };
 
   // review part
 
- const [reviewData, setReviewData] = useState([]);
- useEffect(()=>{
-  axios.get(`https://newassignment-11.vercel.app/reviews/${_id}`)
-  .then(res=>{
-    setReviewData(res.data);
-  })
- },[])
+  const [reviewData, setReviewData] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`https://newassignment-11.vercel.app/reviews/${_id}`)
+      .then((res) => {
+        setReviewData(res.data);
+      });
+  }, []);
 
   // verify
   const [bookinguser, setBookinguser] = useState("");
 
   useEffect(() => {
-    axios.get(`https://newassignment-11.vercel.app/bookings/${_id}`)
-    .then((res) => {
-      setBookinguser(res.data);
-    });
+    axios
+      .get(`https://newassignment-11.vercel.app/bookings/${_id}`)
+      .then((res) => {
+        setBookinguser(res.data);
+      });
   }, [_id]);
 
-  // console.log(data?.data?.totalReview)
+//  add to favorite
+const handleFavorite = () => {
+  if (!user) {
+    navigate("/login");
+  } else {
+    const favoriteDetails = {
+      image: image,
+      id: _id,
+      title: title,
+      description: description,
+      email: user?.email,
+      name: user?.displayName,
+      price: price,
+      rating: rating,
+      review: review
+    };
+
+    console.log(favoriteDetails);
+    axios
+      .post("https://newassignment-11.vercel.app/favorites", favoriteDetails)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "This room added to favorite successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    
+  }
+  
+}
 
   return (
     <div>
-
-{/*         <Helmet>
+      {/*         <Helmet>
                 <title>Room Details| Avson Hotel & Room Services</title>
             </Helmet> */}
       <div className="grid lg:grid-cols-6 gap-6 lg:m-20 my-12">
@@ -144,7 +167,8 @@ console.log(data.data);
             </div>
 
             <div className="flex items-center gap-4">
-              <MdOutlineBedroomParent /> <span>{data?.data?.bedroom_count} Bedroom(s)</span>
+              <MdOutlineBedroomParent />{" "}
+              <span>{data?.data?.bedroom_count} Bedroom(s)</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -177,13 +201,19 @@ console.log(data.data);
                 <p className="text-right font-bold">{data?.data?.offer}</p>
               </div>
             )}
+            <div className="absolute top-0 ">
+              <button onClick={handleFavorite} className="btn btn-ghost bg-transparent">
+              <IoIosHeart className="text-red-600 text-4xl" />
+              </button>
+            </div>
           </div>
         </div>
 
         <div className="lg:col-span-2">
           <div className="bg-[#111827] text-white">
             <p className="text-3xl font-bold ml-8 py-9 md:text-center lg:text-left">
-              {data?.data?.price}$ / <sub className="text-lg font-normal">Night</sub>
+              {data?.data?.price}$ /{" "}
+              <sub className="text-lg font-normal">Night</sub>
             </p>
           </div>
 
@@ -201,15 +231,23 @@ console.log(data.data);
 
           {/* booking button + modals */}
           <div className="flex justify-center">
-
-
-
-
-
-            {data?.found===true ? <button className="bg-[#fea116] btn text-white " disabled='disabled'>Unavailable</button>: <button onClick={() => {
-                document.getElementById("my_modal_1").showModal();
-              }}
-              className="bg-[#fea116] btn text-white">Book Now</button>}
+            {data?.found === true ? (
+              <button
+                className="bg-[#fea116] btn text-white "
+                disabled="disabled"
+              >
+                Unavailable
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  document.getElementById("my_modal_1").showModal();
+                }}
+                className="bg-[#fea116] btn text-white"
+              >
+                Book Now
+              </button>
+            )}
             {/* <button
               onClick={() => {
                 document.getElementById("my_modal_1").showModal();
@@ -269,70 +307,70 @@ console.log(data.data);
 
       {/* review section */}
 
-      {reviewData.length > 0 && <div className="my-8">
-        <div>
-          <h2 className="text-2xl font-bold text-center">Customer Reviews</h2>
-        </div>
-        <div>
-          <Swiper
-            navigation={true}
-            spaceBetween={30}
-            centeredSlides={true}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Autoplay, Pagination, Navigation]}
-            loop={true}
-          >
-            {reviewData?.map((item, idx) => (
-              <SwiperSlide key={idx}>
-                <div className="container flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 text-gray-900 bg-gray-100">
-                  <div className="flex justify-between p-4">
-                    <div className="flex space-x-4">
-                      <div>
-                        <img
-                          src={
-                            item?.photo
-                              ? item?.photo
-                              : person
-                          }
-                          alt=""
-                          className="object-cover w-12 h-12 rounded-full bg-gray-500"
-                        />
+      {reviewData.length > 0 && (
+        <div className="my-8">
+          <div>
+            <h2 className="text-2xl font-bold text-center">Customer Reviews</h2>
+          </div>
+          <div>
+            <Swiper
+              navigation={true}
+              spaceBetween={30}
+              centeredSlides={true}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Autoplay, Pagination, Navigation]}
+              loop={true}
+            >
+              {reviewData?.map((item, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className="container flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 text-gray-900 bg-gray-100">
+                    <div className="flex justify-between p-4">
+                      <div className="flex space-x-4">
+                        <div>
+                          <img
+                            src={item?.photo ? item?.photo : person}
+                            alt=""
+                            className="object-cover w-12 h-12 rounded-full bg-gray-500"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="">{item?.user}</h4>
+                          <span className="text-xs text-gray-400">
+                            {item?.postingTime}
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="">{item?.user}</h4>
-                        <span className="text-xs text-gray-400">{item?.postingTime}</span>
+                      <div className="flex items-center space-x-2 text-yellow-500">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                          className="w-5 h-5 fill-current"
+                        >
+                          <path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
+                        </svg>
+                        <span className="text-xl font-bold">
+                          {item?.rating}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 text-yellow-500">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                        className="w-5 h-5 fill-current"
-                      >
-                        <path d="M494,198.671a40.536,40.536,0,0,0-32.174-27.592L345.917,152.242,292.185,47.828a40.7,40.7,0,0,0-72.37,0L166.083,152.242,50.176,171.079a40.7,40.7,0,0,0-22.364,68.827l82.7,83.368-17.9,116.055a40.672,40.672,0,0,0,58.548,42.538L256,428.977l104.843,52.89a40.69,40.69,0,0,0,58.548-42.538l-17.9-116.055,82.7-83.368A40.538,40.538,0,0,0,494,198.671Zm-32.53,18.7L367.4,312.2l20.364,132.01a8.671,8.671,0,0,1-12.509,9.088L256,393.136,136.744,453.3a8.671,8.671,0,0,1-12.509-9.088L144.6,312.2,50.531,217.37a8.7,8.7,0,0,1,4.778-14.706L187.15,181.238,248.269,62.471a8.694,8.694,0,0,1,15.462,0L324.85,181.238l131.841,21.426A8.7,8.7,0,0,1,461.469,217.37Z"></path>
-                      </svg>
-                      <span className="text-xl font-bold">{item?.rating}</span>
+                    <div className="p-4 space-y-2 text-gray-800 font-bold">
+                      <p>{item?.reviewText}</p>
                     </div>
                   </div>
-                  <div className="p-4 space-y-2 text-gray-800 font-bold">
-                    <p>{item?.reviewText}</p>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
-      </div>}
+      )}
 
-
-{
-  user?.email!==bookinguser.email && <div className="flex justify-center font-medium">
-    <p>Please book this room to add review</p>
-  </div>
-}
-
+      {user?.email !== bookinguser.email && (
+        <div className="flex justify-center font-medium">
+          <p>Please book this room to add review</p>
+        </div>
+      )}
 
       {/* {user?.email==bookinguser.email && <div className="px-4 md:px-0">
         <div className="flex flex-col items-center">
@@ -368,9 +406,6 @@ console.log(data.data);
           </div>
         </div>
       </div>} */}
-
-
-
     </div>
   );
 };

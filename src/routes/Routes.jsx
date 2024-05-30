@@ -8,6 +8,7 @@ import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
 import RoomDetails from "../pages/RoomDetails";
 import PrivateRoute from "../components/PrivateRoute";
+import Favorites from "../pages/Favorites";
 
 
 
@@ -45,6 +46,12 @@ export const router = createBrowserRouter([
                 {
                     path: '/register',
                     element: <Register></Register>
+                },
+                {
+                    path: '/favorites',
+                    element: <PrivateRoute>
+                        <Favorites></Favorites>
+                    </PrivateRoute>
                 }
             ]
         }
