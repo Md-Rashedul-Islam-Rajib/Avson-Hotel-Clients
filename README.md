@@ -71,13 +71,13 @@ Resources:
 5. **Start the Server**
    - Navigate to the server repository folder and start the server using nodemon:
      ```bash
-     cd Empuls-Server
+     cd Avson-Hotel-Server
      nodemon index.js
      ```
 
 6. **Start the Client**
    - Navigate to the clients repository folder and start the client development server:
      ```bash
-     cd Empuls-Clients
+     cd Avson-Hotel-Clients
      npm run dev
      ```
