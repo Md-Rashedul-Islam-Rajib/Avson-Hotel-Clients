@@ -17,7 +17,7 @@ const Home = () => {
        
         setModalOpen(true);
 
-        // Cleanup function to close the modal when the component unmounts
+      
         return () => setModalOpen(false);
     }, []);
 
