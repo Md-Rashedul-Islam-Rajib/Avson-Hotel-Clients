@@ -14,7 +14,7 @@ const Home = () => {
     const [modalOpen, setModalOpen] = useState(true);
 
     useEffect(() => {
-        // Open the modal by default when the Home component mounts
+       
         setModalOpen(true);
 
         // Cleanup function to close the modal when the component unmounts
