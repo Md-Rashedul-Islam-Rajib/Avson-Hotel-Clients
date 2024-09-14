@@ -43,7 +43,7 @@ const Footer = () => {
 				</ul>
 			</div>
 			<div className="space-y-3">
-				<h3 className="uppercase text-gray-50">Developers</h3>
+				<h3 className="uppercase text-black">Developers</h3>
 				<ul className="space-y-1">
 					<li>
 						<a rel="noopener noreferrer" href="#">Public API</a>
