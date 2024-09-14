@@ -18,6 +18,7 @@ const Home = () => {
         const hasSeenModal = sessionStorage.getItem('hasSeenModal');
         if(!hasSeenModal){
         setModalOpen(true);
+        sessionStorage.setItem("hasSeenModal","true");
         }
       
         return () => setModalOpen(false);
