@@ -21,7 +21,7 @@ const Home = () => {
         sessionStorage.setItem("hasSeenModal","true");
         }
       
-        return () => setModalOpen(false);
+        // return () => setModalOpen(false);
     }, []);
 
     return (
