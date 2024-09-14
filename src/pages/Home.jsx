@@ -15,6 +15,7 @@ const Home = () => {
 
     useEffect(() => {
        
+        const hasSeenModal = sessionStorage.getItem('hasSeenModal')
         setModalOpen(true);
 
       
