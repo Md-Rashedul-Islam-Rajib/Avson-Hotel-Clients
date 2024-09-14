@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { XIcon } from '@heroicons/react/outline';
 import Banner from "../components/Banner";
 import FeaturedSection from "../components/FeaturedSection";
 import MapSection from "../components/MapSection";
